@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     //for API
-    private String url= "";
+    private String url= "https://api.cricapi.com/v1/matches?apikey=7d2dc5ae-9763-41fe-8f0d-00217c6a0d8f&offset=0";
 
     private RecyclerView.Adapter mAdapter;
     private List<Model> modelList;
@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
                 try {
                     //get json object from response and get json
+
                     JSONArray jsonArray = new JSONObject(response).getJSONArray("matches");
 
                     //continue getting and setting data while array is completed
@@ -92,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
                             String team2= jsonArray.getJSONObject(i).getString("team2");
                             String matchtype= jsonArray.getJSONObject(i).getString("type");
                             String matchstatus= jsonArray.getJSONObject(i).getString("matchstarted");
-                            if (matchstatus.equals("true")){
+                            if (matchstatus.equals("success")){
                                 matchstatus="Match Started";
                             }
                             else

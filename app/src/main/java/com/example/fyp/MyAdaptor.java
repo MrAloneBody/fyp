@@ -1,6 +1,8 @@
 package com.example.fyp;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,16 +58,58 @@ public class MyAdaptor extends RecyclerView.Adapter<MyAdaptor.ViewHolder>{
             @Override
             public void onClick(View v) {
 
+                //Show dialog on click with options of "Match Details" and "PLayers Details"
 
                 String matchid = model.getId();
                 String  date= model.getDate();
 
-                Intent intent = new Intent(context, MatchDetailActivity.class);
-                intent.putExtra("match_id",matchid);
-                intent.putExtra("date",date);
+                //options to Display in dialog
+                String[] options= {"Match Detials","Players List","Match Summary"};
 
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
+                //Dialog
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
+                builder.setTitle("Choose Option");//Title
+
+                //set options to dialog box
+                builder.setItems(options, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which ==0){
+                            //Match details is clicked
+                            Intent intent = new Intent(context, MatchDetailActivity.class);
+                            intent.putExtra("match_id",matchid);
+                            intent.putExtra("date",date);
+
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(intent);
+
+
+                        }
+
+                        if (which ==1){
+                            //PLayers list is clicked
+
+                            Intent intent = new Intent(context, PlayersActivity.class);
+                            intent.putExtra("match_id",matchid);
+
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(intent);
+
+                        }
+                        if (which ==2){
+                            //MatchSummary is clicked
+
+                            Intent intent = new Intent(context, MatchSummaryActivity.class);
+                            intent.putExtra("match_id",matchid);
+
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(intent);
+
+                        }
+                    }
+                });
+                builder.create().show();
+
 
             }
         });
